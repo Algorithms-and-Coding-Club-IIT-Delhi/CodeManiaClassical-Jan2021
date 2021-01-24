@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-
     static int[] a;
 
     public static Comparator<Integer> compareByAReverse = new Comparator<Integer>() {
@@ -11,20 +10,20 @@ public class Main {
         }
     };
 
-    public static Comparator<ArrayList<Integer>> compareBySizeReverse = new Comparator<ArrayList<Integer>>() {
-        public int compare(ArrayList<Integer> x, ArrayList<Integer> y) {
-            return Integer.compare(y.size(), x.size());
-        }
-    };
+    public static Comparator<ArrayList<Integer>> compareBySizeReverse =
+        new Comparator<ArrayList<Integer>>() {
+            public int compare(ArrayList<Integer> x, ArrayList<Integer> y) {
+                return Integer.compare(y.size(), x.size());
+            }
+        };
 
     public static void main(String[] args) throws IOException {
-    
         Scanner scan = new Scanner(System.in);
         OutputWriter out = new OutputWriter(System.out);
 
         int n = scan.nextInt();
         int m = scan.nextInt();
-        
+
         boolean[] visited;
         ArrayList<ArrayList<Integer>> g, components;
 
@@ -98,7 +97,6 @@ public class Main {
         out.close();
     }
 
-
     // fast input
     static class Scanner {
         public BufferedReader reader;
@@ -123,9 +121,15 @@ public class Main {
             return tokenizer.nextToken();
         }
 
-        public int nextInt() { return Integer.parseInt(next()); }
-        public long nextLong() { return Long.parseLong(next()); }
-        public double nextDouble() { return Double.parseDouble(next()); }
+        public int nextInt() {
+            return Integer.parseInt(next());
+        }
+        public long nextLong() {
+            return Long.parseLong(next());
+        }
+        public double nextDouble() {
+            return Double.parseDouble(next());
+        }
     }
 
     // fast output
@@ -136,10 +140,18 @@ public class Main {
             writer = new BufferedWriter(new OutputStreamWriter(stream));
         }
 
-        public void print(int i) throws IOException { writer.write(i); }
-        public void print(String s) throws IOException { writer.write(s); }
-        public void print(char[] c) throws IOException { writer.write(c); }
-        public void close() throws IOException { writer.close(); }
+        public void print(int i) throws IOException {
+            writer.write(i);
+        }
+        public void print(String s) throws IOException {
+            writer.write(s);
+        }
+        public void print(char[] c) throws IOException {
+            writer.write(c);
+        }
+        public void close() throws IOException {
+            writer.close();
+        }
     }
 
     static class Pair<U, V> implements Comparable<Pair<U, V>> {
@@ -164,11 +176,10 @@ public class Main {
                 return false;
             }
 
-            Pair pair = (Pair)o;
+            Pair pair = (Pair) o;
 
-            return !(first != null ? !first.equals(pair.first)
-                    : pair.first != null) &&
-                !(second != null ? !second.equals(pair.second) : pair.second != null);
+            return !(first != null ? !first.equals(pair.first) : pair.first != null)
+                && !(second != null ? !second.equals(pair.second) : pair.second != null);
         }
 
         @Override
@@ -178,7 +189,9 @@ public class Main {
             return result;
         }
 
-        public Pair<V, U> swap() { return makePair(second, first); }
+        public Pair<V, U> swap() {
+            return makePair(second, first);
+        }
 
         @Override
         public String toString() {
@@ -187,11 +200,11 @@ public class Main {
 
         @SuppressWarnings({"unchecked"})
         public int compareTo(Pair<U, V> o) {
-            int value = ((Comparable<U>)first).compareTo(o.first);
+            int value = ((Comparable<U>) first).compareTo(o.first);
             if (value != 0) {
                 return value;
             }
-            return ((Comparable<V>)second).compareTo(o.second);
+            return ((Comparable<V>) second).compareTo(o.second);
         }
     }
 }

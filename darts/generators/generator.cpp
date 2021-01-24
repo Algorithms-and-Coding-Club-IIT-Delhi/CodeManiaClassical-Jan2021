@@ -1,42 +1,38 @@
-#include "testlib.h"
-
-#include <vector>
-#include <utility>
-#include <iostream>
 #include <algorithm>
 #include <cassert>
+#include <iostream>
+#include <utility>
+#include <vector>
 
-std::vector<std::pair<int, int>> generate_pareto_boundary(int n, int convexity, int r = 1e9) {
+#include "testlib.h"
 
+std::vector<std::pair<int, int>> generate_pareto_boundary(int n, int convexity,
+                                                          int r = 1e9) {
     std::vector<int> x(10 * n), y(10 * n);
-    
+
     for (auto &t : x) t = rnd.wnext(r, convexity);
     for (auto &t : y) t = rnd.wnext(r, convexity);
-    
+
     sort(begin(x), end(x));
     sort(rbegin(y), rend(y));
-    
+
     x.resize(unique(begin(x), end(x)) - begin(x));
     y.resize(unique(begin(y), end(y)) - begin(y));
-    
+
     int sample_size = std::min(x.size(), y.size());
 
     assert(sample_size >= n);
 
     std::vector<std::pair<int, int>> p(sample_size), q(n);
-    for (int i = 0; i < sample_size; ++i)
-        p[i] = {x[i], y[i]};
+    for (int i = 0; i < sample_size; ++i) p[i] = {x[i], y[i]};
     shuffle(p.begin(), p.end());
-    
-    for (int i = 0; i < n; ++i)
-        q[i] = p[i];
+
+    for (int i = 0; i < n; ++i) q[i] = p[i];
 
     return q;
-
 }
 
-int main(int argc, char* argv[]) {
-
+int main(int argc, char *argv[]) {
     // registerGen(argc, argv, 1);
     rnd.setSeed(1089);
 
@@ -49,36 +45,36 @@ int main(int argc, char* argv[]) {
 
     switch (type_n) {
         case 1: {
-                    sz = 1;
-                    break;
-                }
+            sz = 1;
+            break;
+        }
         case 2: {
-                    sz = 10;
-                    break;
-                }
+            sz = 10;
+            break;
+        }
         case 3: {
-                    sz = n / 2;
-                    break;
-                }
+            sz = n / 2;
+            break;
+        }
         case 4: {
-                    sz = n - 10;
-                    break;
-                }
+            sz = n - 10;
+            break;
+        }
         case 5: {
-                    sz = n - 1;
-                    break;
-                }
+            sz = n - 1;
+            break;
+        }
         case 6: {
-                    sz = n;
-                    break;
-                }
+            sz = n;
+            break;
+        }
     }
 
     auto given_set = generate_pareto_boundary(sz, convexity);
     auto pareto_boundary = given_set;
     sort(begin(pareto_boundary), end(pareto_boundary));
 
-    for (int i = 0; i + 1 < (int) pareto_boundary.size(); ++i) {
+    for (int i = 0; i + 1 < (int)pareto_boundary.size(); ++i) {
         assert(pareto_boundary[i].first < pareto_boundary[i + 1].first);
         assert(pareto_boundary[i].second > pareto_boundary[i + 1].second);
     }
@@ -151,8 +147,10 @@ int main(int argc, char* argv[]) {
                     queries.emplace_back(pareto_boundary[index]);
                 } else {
                     int index = rnd.next(0, sz - 2);
-                    int random_x = rnd.next(pareto_boundary[index].first, pareto_boundary[index + 1].first);
-                    int random_y = rnd.next(pareto_boundary[index + 1].second, pareto_boundary[index].second);
+                    int random_x = rnd.next(pareto_boundary[index].first,
+                                            pareto_boundary[index + 1].first);
+                    int random_y = rnd.next(pareto_boundary[index + 1].second,
+                                            pareto_boundary[index].second);
                     queries.emplace_back(random_x, random_y);
                 }
             }
@@ -166,5 +164,4 @@ int main(int argc, char* argv[]) {
     }
 
     return 0;
-
 }

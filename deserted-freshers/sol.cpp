@@ -7,7 +7,6 @@
 using i32 = int_fast32_t;
 
 int main() {
-
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(nullptr);
     std::cout.tie(nullptr);
@@ -18,8 +17,7 @@ int main() {
     std::vector<i32> a(n), visited(n);
     std::vector<std::vector<i32>> g(n), components(n);
 
-    for (auto &&x : a)
-        std::cin >> x;
+    for (auto &&x : a) std::cin >> x;
 
     for (i32 i = 0; i < m; ++i) {
         i32 u, v;
@@ -52,14 +50,12 @@ int main() {
     std::iota(indices.begin(), indices.end(), 0);
 
     std::sort(indices.begin(), indices.end(),
-            [&](const i32 i, const i32 j) {
-                return a[i] > a[j];
-            });
+              [&](const i32 i, const i32 j) { return a[i] > a[j]; });
 
     std::sort(components.begin(), components.begin() + total_components,
-            [](const std::vector<i32> &i, const std::vector<i32> &j) {
-                return i.size() > j.size();
-            });
+              [](const std::vector<i32> &i, const std::vector<i32> &j) {
+                  return i.size() > j.size();
+              });
 
     i32 current_rank = 0;
     std::vector<i32> assigned_vertex(n);
@@ -70,8 +66,7 @@ int main() {
         }
     }
 
-    for (auto &&x : assigned_vertex)
-        std::cout << x + 1 << ' ';
+    for (auto &&x : assigned_vertex) std::cout << x + 1 << ' ';
 
     std::cout << '\n';
 

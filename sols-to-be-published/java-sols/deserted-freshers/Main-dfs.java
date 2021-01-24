@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Main implements Runnable {
-
     public static void main(String[] args) {
         new Thread(null, new Main(), "main", 1 << 26).start();
     }
@@ -27,11 +26,12 @@ public class Main implements Runnable {
         }
     };
 
-    public static Comparator<ArrayList<Integer>> compareBySizeReverse = new Comparator<ArrayList<Integer>>() {
-        public int compare(ArrayList<Integer> x, ArrayList<Integer> y) {
-            return Integer.compare(y.size(), x.size());
-        }
-    };
+    public static Comparator<ArrayList<Integer>> compareBySizeReverse =
+        new Comparator<ArrayList<Integer>>() {
+            public int compare(ArrayList<Integer> x, ArrayList<Integer> y) {
+                return Integer.compare(y.size(), x.size());
+            }
+        };
 
     public void run() {
         Scanner scan = new Scanner(System.in);
@@ -126,9 +126,15 @@ public class Main implements Runnable {
             return tokenizer.nextToken();
         }
 
-        public int nextInt() { return Integer.parseInt(next()); }
-        public long nextLong() { return Long.parseLong(next()); }
-        public double nextDouble() { return Double.parseDouble(next()); }
+        public int nextInt() {
+            return Integer.parseInt(next());
+        }
+        public long nextLong() {
+            return Long.parseLong(next());
+        }
+        public double nextDouble() {
+            return Double.parseDouble(next());
+        }
     }
 
     // fast output
@@ -139,10 +145,18 @@ public class Main implements Runnable {
             writer = new BufferedWriter(new OutputStreamWriter(stream));
         }
 
-        public void print(int i) throws IOException { writer.write(i); }
-        public void print(String s) throws IOException { writer.write(s); }
-        public void print(char[] c) throws IOException { writer.write(c); }
-        public void close() throws IOException { writer.close(); }
+        public void print(int i) throws IOException {
+            writer.write(i);
+        }
+        public void print(String s) throws IOException {
+            writer.write(s);
+        }
+        public void print(char[] c) throws IOException {
+            writer.write(c);
+        }
+        public void close() throws IOException {
+            writer.close();
+        }
     }
 
     static class Pair<U, V> implements Comparable<Pair<U, V>> {
@@ -167,11 +181,10 @@ public class Main implements Runnable {
                 return false;
             }
 
-            Pair pair = (Pair)o;
+            Pair pair = (Pair) o;
 
-            return !(first != null ? !first.equals(pair.first)
-                    : pair.first != null) &&
-                !(second != null ? !second.equals(pair.second) : pair.second != null);
+            return !(first != null ? !first.equals(pair.first) : pair.first != null)
+                && !(second != null ? !second.equals(pair.second) : pair.second != null);
         }
 
         @Override
@@ -181,7 +194,9 @@ public class Main implements Runnable {
             return result;
         }
 
-        public Pair<V, U> swap() { return makePair(second, first); }
+        public Pair<V, U> swap() {
+            return makePair(second, first);
+        }
 
         @Override
         public String toString() {
@@ -190,11 +205,11 @@ public class Main implements Runnable {
 
         @SuppressWarnings({"unchecked"})
         public int compareTo(Pair<U, V> o) {
-            int value = ((Comparable<U>)first).compareTo(o.first);
+            int value = ((Comparable<U>) first).compareTo(o.first);
             if (value != 0) {
                 return value;
             }
-            return ((Comparable<V>)second).compareTo(o.second);
+            return ((Comparable<V>) second).compareTo(o.second);
         }
     }
 }
