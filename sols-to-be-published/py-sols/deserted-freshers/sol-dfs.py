@@ -19,43 +19,49 @@ def get_tuple_ints():
 def print_iterable(p):
     print(" ".join(map(str, p)))
 
-from collections import deque
 def main():
+
     n, m = get_tuple_ints()
     a = get_list_ints()
+
     visited = [False for i in range(n)]
     g = [[] for i in range(n)]
     components = [[] for i in range(n)]
+
     for i in range(m):
         u, v = get_tuple_ints()
         u -= 1
         v -= 1
         g[u].append(v)
         g[v].append(u)
+
     component = 0
     for v in range(n):
         if visited[v]:
             continue
-        q = deque([])
-        q.append(v)
-        visited[v] = True
-        while q:
-            v = q.popleft()
-            components[component].append(v)
-            for u in g[v]:
-                if not visited[u]:
-                    q.append(u)
-                    visited[u] = True
+        stack = [v]
+        while stack:
+            v = stack[-1]
+            stack.pop()
+            if not visited[v]:
+                components[component].append(v)
+                for u in g[v]:
+                    if not visited[u]:
+                        stack.append(u)
+                visited[v] = True
         component += 1
+
     total_components = component
     indices = sorted([i for i in range(n)], key=lambda x : -a[x])
     components.sort(key=lambda x : -len(x))
+
     current_rank = 0
     assigned_vertex = [0 for i in range(n)]
     for component in range(total_components):
         for x in components[component]:
             assigned_vertex[indices[current_rank]] = x + 1
             current_rank += 1
+
     print_iterable(assigned_vertex)
     pass
 
