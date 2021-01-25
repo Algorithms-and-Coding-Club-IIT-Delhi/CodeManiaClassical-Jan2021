@@ -1,6 +1,6 @@
 # CodeMania Classical 1.0 - January 2021
 
-This repository contains the problem materials for CodeMania Classical 1.0 held in January 2021, and is intended to be an example of what source files need to be prepared during a contest.
+This repository contains the problem materials for CodeMania Classical 1.0 held in January 2021, and is intended to be an example of what source files need to be prepared during the preparation of a contest.
 
 ## Contents
 
