@@ -18,7 +18,6 @@ int main() {
     sort(begin(a), end(a));
 
     function<vector<int>(const int, const int)> find_maximal =
-
         [&](const int l, const int r) {
             if (l == r) return vector<int>{l};
             int m = l + ((r - l) >> 1);
