@@ -1,24 +1,8 @@
 import java.io.*;
 import java.util.*;
 
-public class Main implements Runnable {
-    public static void main(String[] args) {
-        new Thread(null, new Main(), "main", 1 << 26).start();
-    }
-
+public class Main {
     static int[] a;
-    static boolean[] visited;
-    static ArrayList<ArrayList<Integer>> g, components;
-
-    void dfs(int v, int component) {
-        visited[v] = true;
-        components.get(component).add(v);
-        for (int u : g.get(v)) {
-            if (!visited[u]) {
-                dfs(u, component);
-            }
-        }
-    }
 
     public static Comparator<Integer> compareByAReverse = new Comparator<Integer>() {
         public int compare(Integer x, Integer y) {
@@ -33,45 +17,29 @@ public class Main implements Runnable {
             }
         };
 
-    public void run() {
+    public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
         OutputWriter out = new OutputWriter(System.out);
 
         int n = scan.nextInt();
         int m = scan.nextInt();
 
-        g = new ArrayList<ArrayList<Integer>>();
-        components = new ArrayList<ArrayList<Integer>>();
-        for (int i = 0; i < n; ++i) {
-            g.add(new ArrayList<Integer>());
-            components.add(new ArrayList<Integer>());
-        }
-
         a = new int[n];
-        visited = new boolean[n];
-
-        for (int i = 0; i < n; ++i) {
-            visited[i] = false;
-        }
 
         for (int i = 0; i < n; ++i) {
             a[i] = scan.nextInt();
         }
 
+        DSU dsu = new DSU(n);
+
         for (int i = 0; i < m; ++i) {
             int u = scan.nextInt() - 1;
             int v = scan.nextInt() - 1;
-            g.get(u).add(v);
-            g.get(v).add(u);
+            dsu.unionSets(u, v);
         }
 
-        int totalComponents = 0;
-        for (int i = 0; i < n; ++i) {
-            if (!visited[i]) {
-                dfs(i, totalComponents);
-                totalComponents++;
-            }
-        }
+        ArrayList<ArrayList<Integer>> components = dsu.getComponents();
+        int totalComponents = components.size();
 
         ArrayList<Integer> indices = new ArrayList<Integer>();
         for (int i = 0; i < n; ++i) {
@@ -91,15 +59,73 @@ public class Main implements Runnable {
             }
         }
 
-        try {
-            for (int x : assignedVertex) {
-                out.print(x + " ");
-            }
-            out.print("\n");
-            out.close();
-        } catch (IOException e) {
-            ;
+        for (int x : assignedVertex) {
+            out.print(x + " ");
         }
+        out.print("\n");
+        out.close();
+    }
+
+    static class DSU {
+        int n;
+        int[] par, siz;
+
+        public DSU(int size) {
+            n = size;
+            par = new int[n];
+            siz = new int[n];
+            for (int i = 0; i < n; ++i) {
+                makeSet(i);
+            }
+        }
+
+        public void makeSet(int v) {
+            par[v] = v;
+            siz[v] = 1;
+        }
+
+        int findSet(int v) {
+            if (v == par[v]) return v;
+            par[v] = findSet(par[v]);
+            return par[v];
+        }
+
+        void unionSets(int a, int b) {
+            a = findSet(a);
+            b = findSet(b);
+            if (a != b) {
+                if (siz[a] < siz[b]) {
+                    int t = a;
+                    a = b;
+                    b = t;
+                }
+                par[b] = a;
+                siz[a] += siz[b];
+            }
+        }
+
+        ArrayList<ArrayList<Integer>> getComponents() {
+            int[] representative = new int[n];
+            int[] componentSize = new int[n];
+            for (int i = 0; i < n; ++i) {
+                representative[i] = findSet(i);
+                componentSize[representative[i]]++;
+            }
+            ArrayList<Integer>[] components = new ArrayList[n];
+            for (int i = 0; i < n; ++i) {
+                components[i] = new ArrayList<Integer>(componentSize[i]);
+            }
+            for (int i = 0; i < n; ++i) {
+                components[representative[i]].add(i);
+            }
+            ArrayList<ArrayList<Integer>> nonEmptyComponents = new ArrayList<ArrayList<Integer>>();
+            for (ArrayList<Integer> component : components) {
+                if (component.isEmpty()) continue;
+                nonEmptyComponents.add(component);
+            }
+            return nonEmptyComponents;
+        }
+
     }
 
     // fast input

@@ -9,36 +9,33 @@ public class Main {
         return gcd(b % a, a);
     }
 
+    static long power(long a, long n, long mod) {
+        if (n == 0)
+            return 1;
+        long res = power(a, n / 2, mod);
+        if (n % 2 == 0) {
+            return res * res % mod;
+        } else {
+            return ((res * res) % mod) * a % mod;
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
         OutputWriter out = new OutputWriter(System.out);
 
-        int q = scan.nextInt();
+        long n = scan.nextInt();
+        long k = scan.nextInt();
+        long p = scan.nextInt();
 
-        while (q-- > 0) {
-            long a = scan.nextLong();
-            long b = scan.nextLong();
-            long x = scan.nextLong();
-            if (a == 0 && b == 0) {
-                if (x == 0) {
-                    out.print(1 + "\n");
-                } else {
-                    out.print(0 + "\n");
-                }
-                continue;
-            }
-            long g = gcd(a, b);
-            if (x % 2 == 0 && (x / 2) % g == 0) {
-                out.print(1 + "\n");
-                continue;
-            }
-            x -= a + b;
-            if (x % 2 == 0 && (x / 2) % g == 0) {
-                out.print(1 + "\n");
-                continue;
-            }
-            out.print(0 + "\n");
+        long ans = 0;
+
+        for (long i = 1; i < p; ++i) {
+            long j = (power(i * i % p, p - 2, p) * k) % p;
+            ans += ((n + p - i) / p) * ((n + p - j) / p);
         }
+
+        out.print(ans + "\n");
 
         out.close();
     }

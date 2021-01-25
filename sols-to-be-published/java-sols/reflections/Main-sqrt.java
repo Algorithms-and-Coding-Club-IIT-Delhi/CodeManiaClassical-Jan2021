@@ -3,10 +3,21 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    static long gcd(long a, long b) {
-        if (a == 0)
-            return b;
-        return gcd(b % a, a);
+
+    static int phi(int n) {
+        int ans = n;
+        for (int p = 2; p * p <= n; ++p) {
+            if (n % p == 0) {
+                ans -= ans / p;
+                while (n % p == 0) {
+                    n /= p;
+                }
+            }
+        }
+        if (n > 1) {
+            ans -= ans / n;
+        }
+        return ans;
     }
 
     public static void main(String[] args) throws IOException {
@@ -14,30 +25,16 @@ public class Main {
         OutputWriter out = new OutputWriter(System.out);
 
         int q = scan.nextInt();
-
         while (q-- > 0) {
-            long a = scan.nextLong();
-            long b = scan.nextLong();
-            long x = scan.nextLong();
-            if (a == 0 && b == 0) {
-                if (x == 0) {
-                    out.print(1 + "\n");
-                } else {
-                    out.print(0 + "\n");
-                }
-                continue;
+            int k = scan.nextInt();
+            int b = scan.nextInt();
+            int c = scan.nextInt();
+            int d = scan.nextInt();
+            if (k % 2 == 0) {
+                out.print(c * phi(k + 2) + "\n");
+            } else {
+                out.print((b + d) * phi(k + 2) / 2 + "\n");
             }
-            long g = gcd(a, b);
-            if (x % 2 == 0 && (x / 2) % g == 0) {
-                out.print(1 + "\n");
-                continue;
-            }
-            x -= a + b;
-            if (x % 2 == 0 && (x / 2) % g == 0) {
-                out.print(1 + "\n");
-                continue;
-            }
-            out.print(0 + "\n");
         }
 
         out.close();

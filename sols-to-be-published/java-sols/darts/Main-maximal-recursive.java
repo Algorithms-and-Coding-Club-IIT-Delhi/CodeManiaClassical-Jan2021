@@ -1,41 +1,75 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
+    
+    static Pair<Integer, Integer>[] a;
+
+    static ArrayList<Integer> findMaximal (int l, int r) {
+        if (l == r) {
+            ArrayList<Integer> answer = new ArrayList<Integer>();
+            answer.add(l);
+            return answer;
+        }
+        int m = l + (r - l) / 2;
+        ArrayList<Integer> lMaximal = findMaximal(l, m);
+        ArrayList<Integer> rMaximal = findMaximal(m + 1, r);
+        int maxY = 0;
+        for (int i : rMaximal) {
+            maxY = Math.max(maxY, a[i].second);
+        }
+        for (int i : lMaximal) {
+            if (a[i].second > maxY) {
+                rMaximal.add(i);
+            }
+        }
+        return rMaximal;
+    }
+
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
         OutputWriter out = new OutputWriter(System.out);
 
-        int[] phi = new int[100005];
+        int n = scan.nextInt();
+        int q = scan.nextInt();
 
-        for (int i = 0; i < phi.length; ++i) {
-            phi[i] = i;
+        a = new Pair[n];
+
+        for (int i = 0; i < n; ++i) {
+            int x = scan.nextInt();
+            int y = scan.nextInt();
+            a[i] = new Pair<Integer, Integer>(x, y);
         }
 
-        for (int i = 2; i < phi.length; ++i) {
-            if (phi[i] == i) {
-                for (int j = i; j < phi.length; j += i) {
-                    phi[j] -= phi[j] / i;
+        Arrays.sort(a);
+
+        ArrayList<Integer> maximal = findMaximal(0, n - 1);
+
+        while (q-- > 0) {
+            int x = scan.nextInt();
+            int y = scan.nextInt();
+            int l = 0, r = (int) maximal.size() - 1, i = -1;
+            while (l <= r) {
+                int m = l + (r - l) / 2;
+                if (a[maximal.get(m)].second >= y) {
+                    i = m;
+                    r = m - 1;
+                } else {
+                    l = m + 1;
                 }
             }
-        }
-
-        int q = scan.nextInt();
-        while (q-- > 0) {
-            int k = scan.nextInt();
-            int b = scan.nextInt();
-            int c = scan.nextInt();
-            int d = scan.nextInt();
-            if (k % 2 == 0) {
-                out.print(c * phi[k + 2] + "\n");
+            if (i == -1 || a[maximal.get(i)].first < x) {
+                out.print(-1 + "\n");
             } else {
-                out.print((b + d) * phi[k + 2] / 2 + "\n");
+                out.print(a[maximal.get(i)].first + " " + a[maximal.get(i)].second + "\n");
             }
         }
 
         out.close();
+        return;
     }
+
+    
 
     // fast input
     static class Scanner {

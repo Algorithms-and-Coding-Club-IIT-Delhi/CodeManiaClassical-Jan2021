@@ -3,41 +3,35 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    static long gcd(long a, long b) {
-        if (a == 0)
-            return b;
-        return gcd(b % a, a);
-    }
-
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
         OutputWriter out = new OutputWriter(System.out);
 
-        int q = scan.nextInt();
+        int[] phi = new int[100005];
 
-        while (q-- > 0) {
-            long a = scan.nextLong();
-            long b = scan.nextLong();
-            long x = scan.nextLong();
-            if (a == 0 && b == 0) {
-                if (x == 0) {
-                    out.print(1 + "\n");
-                } else {
-                    out.print(0 + "\n");
+        for (int i = 0; i < phi.length; ++i) {
+            phi[i] = i;
+        }
+
+        for (int i = 2; i < phi.length; ++i) {
+            if (phi[i] == i) {
+                for (int j = i; j < phi.length; j += i) {
+                    phi[j] -= phi[j] / i;
                 }
-                continue;
             }
-            long g = gcd(a, b);
-            if (x % 2 == 0 && (x / 2) % g == 0) {
-                out.print(1 + "\n");
-                continue;
+        }
+
+        int q = scan.nextInt();
+        while (q-- > 0) {
+            int k = scan.nextInt();
+            int b = scan.nextInt();
+            int c = scan.nextInt();
+            int d = scan.nextInt();
+            if (k % 2 == 0) {
+                out.print(c * phi[k + 2] + "\n");
+            } else {
+                out.print((b + d) * phi[k + 2] / 2 + "\n");
             }
-            x -= a + b;
-            if (x % 2 == 0 && (x / 2) % g == 0) {
-                out.print(1 + "\n");
-                continue;
-            }
-            out.print(0 + "\n");
         }
 
         out.close();

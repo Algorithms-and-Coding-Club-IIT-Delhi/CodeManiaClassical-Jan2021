@@ -11,12 +11,13 @@ int main() {
     const int maxn = 100'003;
     vector<int> dp(maxn);
 
+    for (int i = 0; i < maxn; ++i)
+        dp[i] = i >> 1;
+
     for (int i = 2; i < maxn; ++i) {
-        dp[i] += i >> 1;
         int stride = i << 1;
-        for (int j = 3 * i; j < maxn; j += stride) {
+        for (int j = 3 * i; j < maxn; j += stride)
             dp[j] -= dp[i];
-        }
     }
 
     int q, k, b, c, d;
