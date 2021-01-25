@@ -19,4 +19,4 @@ Apart from this, there is a directory for solutions that need to be published, c
 
 ## Attribution
 
-The problems were created by the members of the Algorithms and Coding Club, IIT Delhi, and most of the source code for problems in the problem directories is not my own (except for the problems that I helped prepare). However, the compilation of the problem materials (along with reformatting and refactoring to make it readable) has been done by my and all solutions in the solutions directory are my own.
+The problems were created by the members of the Algorithms and Coding Club, IIT Delhi, and most of the source code for problems in the problem directories is not my own (except for the problems that I prepared or helped prepare). However, the compilation of the problem materials (along with reformatting and refactoring to make it readable) has been done by my and all solutions in the solutions directory are my own.
