@@ -19,7 +19,7 @@ def get_tuple_ints():
 def print_iterable(p):
     print(" ".join(map(str, p)))
 
-import math
+from math import gcd
 def main():
     q = get_int()
     for _ in range(q):
@@ -30,14 +30,11 @@ def main():
             else:
                 print(0)
             continue
-        g = math.gcd(a, b)
-        if x % 2 == 0 and (x // 2) % g == 0:
+        g = gcd(a + b, a - b)
+        if x % g == 0:
             print(1)
-            continue
-        x -= a + b
-        if x % 2 == 0 and (x // 2) % g == 0:
-            print(1)
-            continue
+        else:
+            print(0)
         print(0)
     pass
 

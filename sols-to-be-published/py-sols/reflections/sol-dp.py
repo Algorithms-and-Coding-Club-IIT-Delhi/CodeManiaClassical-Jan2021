@@ -19,24 +19,19 @@ def get_tuple_ints():
 def print_iterable(p):
     print(" ".join(map(str, p)))
 
-import math
 def main():
+    maxn = 10**5 + 3
+    dp = [i // 2 for i in range(maxn)]
+    for i in range(2, maxn):
+        for j in range(i * 3, maxn, i * 2):
+            dp[j] -= dp[i]
     q = get_int()
-    k, b, c, d = get_tuple_ints()
-    ans = 0
-    for i in range(k + 3):
-        if math.gcd(i, k + 2 - i) == 1:
-            if i % 2 == 0:
-                if (k + 2 - i) % 2 == 0:
-                    assert False
-                else:
-                    ans += b
-            else:
-                if (k + 2 - i) % 2 == 0:
-                    ans += d
-                else:
-                    ans += c
-    print(ans)
+    for _ in range(q):
+        k, b, c, d = get_tuple_ints()
+        if k % 2 == 0:
+            print(c * dp[k + 2])
+        else:
+            print((b + d) * dp[k + 2])
     pass
 
 if __name__ == '__main__':

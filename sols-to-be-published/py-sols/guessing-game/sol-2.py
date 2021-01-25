@@ -19,18 +19,20 @@ def get_tuple_ints():
 def print_iterable(p):
     print(" ".join(map(str, p)))
 
-import math
 def main():
-    a, b = get_tuple_ints()
-    g = math.gcd(a, b)
-    a, b = a // g, b // g
-    if b > 2:
-        print(-1)
-    else:
-        if b == 1:
-            a *= 2
-        print(1)
-        print_iterable([0, 2 * a, 2, a, 3, 0])
+    n = get_int()
+    l, r = 1, n
+    while l <= r:
+        m = (l + r) // 2
+        print(m)
+        sys.stdout.flush()
+        result = "".join(get_char_list())
+        if result == "guessed":
+            break
+        elif result == "lesser":
+            l, r = m + 1, r - (r - m) // 2
+        else:
+            l, r = l + (m - l) // 2, m - 1
     pass
 
 if __name__ == '__main__':
