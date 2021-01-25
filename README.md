@@ -17,6 +17,6 @@ For each problem, there are the following materials in their respective director
 
 Apart from this, there is a directory for solutions that need to be published, containing implementations to all problems in at least 3 langauges (preferably C++, Python and Java). The code needs to be well-written and well-formatted, without the use of any macros (in view of readability). Try and use modern language features for code (some examples are in this repo).
 
-## Attribution:
+## Attribution
 
 The problems were created by the members of the Algorithms and Coding Club, IIT Delhi, and most of the source code for problems in the problem directories is not my own (except for the problems that I helped prepare). However, the compilation of the problem materials (along with reformatting and refactoring to make it readable) has been done by my and all solutions in the solutions directory are my own.
